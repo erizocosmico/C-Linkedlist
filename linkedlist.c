@@ -41,7 +41,14 @@ void list_assign_value(t_linkedlist* node, void* value, t_linkedlist_type type)
 		case T_FLOAT: node->value._float = *((float*) value); break;
 		case T_DOUBLE: node->value._double = *((double*) value); break;
 		case T_CHAR: node->value._char = *((char*) value); break;
-		case T_STRING: strcpy(node->value._string, (char*) value); break;
+		case T_STRING:
+		{
+			if (strlen(node->value._string) > 0)
+				free(node->value._string);
+			node->value._string = (char*) malloc(sizoef(char) * strlen(value));
+			strcpy(node->value._string, (char*) value);
+		}
+		break;
 		case T_LONG: node->value._long = *((short*) value); break;
 		default:
 			node->value._undef = value;
