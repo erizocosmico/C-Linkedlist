@@ -31,31 +31,13 @@
 #include <string.h>
 #include "linkedlist.h"
 
-void list_assign_value(t_linkedlist* node, void* value, t_linkedlist_type type)
+void list_assign_value(t_linkedlist* node, void* value, size_t size)
 {
-	node->type = type;
-	switch (type)
-	{
-		case T_SHORT: node->value._short = *((short*) value); break;
-		case T_INT: node->value._int = *((int*) value); break;
-		case T_FLOAT: node->value._float = *((float*) value); break;
-		case T_DOUBLE: node->value._double = *((double*) value); break;
-		case T_CHAR: node->value._char = *((char*) value); break;
-		case T_STRING:
-		{
-			if (strlen(node->value._string) > 0)
-				free(node->value._string);
-			node->value._string = (char*) malloc(sizoef(char) * strlen(value));
-			strcpy(node->value._string, (char*) value);
-		}
-		break;
-		case T_LONG: node->value._long = *((short*) value); break;
-		default:
-			node->value._undef = value;
-	}
+	node->value = malloc(size);
+	memmove(node->value, value, size);
 }
 
-void list_append(t_linkedlist** list, void* value, t_linkedlist_type type)
+void list_append(t_linkedlist** list, void* value, size_t size)
 {
 	t_linkedlist *ptr, *ptraux;
 	ptr = *list;
@@ -65,7 +47,7 @@ void list_append(t_linkedlist** list, void* value, t_linkedlist_type type)
 		ptr = (t_linkedlist*) malloc(sizeof(t_linkedlist));
 		if (ptr != NULL)
 		{
-			list_assign_value(ptr, value, type);
+			list_assign_value(ptr, value, size);
 			ptr->link = NULL;
 			*list = ptr;
 		}
@@ -77,27 +59,27 @@ void list_append(t_linkedlist** list, void* value, t_linkedlist_type type)
 		ptraux = (t_linkedlist*) malloc(sizeof(t_linkedlist));
 		if (ptraux != NULL)
 		{
-			list_assign_value(ptraux, value, type);
+			list_assign_value(ptraux, value, size);
 			ptraux->link = NULL;
 			ptr->link = ptraux;
 		}
 	}
 }
 
-void list_insert(t_linkedlist** list, void* value, t_linkedlist_type type, int i)
+void list_insert(t_linkedlist** list, void* value, size_t size, int i)
 {
 	t_linkedlist *ptr, *ptraux, *ptraux2;
 	int j = 0;
 	ptr = *list;
 
 	if (ptr == NULL)
-		list_append(list, value, type);
+		list_append(list, value, size);
 	else
 	{
 		if (!i)
 		{
 			ptraux = (t_linkedlist*) malloc(sizeof(t_linkedlist));
-			list_assign_value(ptraux, value, type);
+			list_assign_value(ptraux, value, size);
 			ptraux->link = ptr;
 			*list = ptraux;
 		}
@@ -110,7 +92,7 @@ void list_insert(t_linkedlist** list, void* value, t_linkedlist_type type, int i
 				{
 					ptraux = ptr->link;
 					ptraux2 = (t_linkedlist*) malloc(sizeof(t_linkedlist));
-					list_assign_value(ptraux2, value, type);
+					list_assign_value(ptraux2, value, size);
 					ptr->link = ptraux2;
 					ptraux2->link = ptraux;
 					break;
@@ -143,12 +125,6 @@ t_linkedlist* list_get_node(t_linkedlist* list, int i)
 	}
 }
 
-t_linkedlist_type list_get_type(t_linkedlist* list, int i)
-{
-	t_linkedlist* ptr = list_get_node(list, i);
-	return ptr->type;
-}
-
 int list_count(t_linkedlist* list)
 {
 	int i = 0;
@@ -165,44 +141,44 @@ int list_count(t_linkedlist* list)
 	return i;
 }
 
+void* list_get(t_linkedlist* list, int i)
+{
+	return list_get_node(list, i)->value;
+}
+
 short list_get_short(t_linkedlist* list, int i)
 {
-	return list_get_node(list, i)->value._short;
+	return *((short*) list_get_node(list, i)->value);
 }
 
 int list_get_int(t_linkedlist* list, int i)
 {
-	return list_get_node(list, i)->value._int;
+	return *((int*) list_get_node(list, i)->value);
 }
 
 float list_get_float(t_linkedlist* list, int i)
 {
-	return list_get_node(list, i)->value._float;
+	return *((float*) list_get_node(list, i)->value);
 }
 
 double list_get_double(t_linkedlist* list, int i)
 {
-	return list_get_node(list, i)->value._double;
+	return *((double*) list_get_node(list, i)->value);
 }
 
 char list_get_char(t_linkedlist* list, int i)
 {
-	return list_get_node(list, i)->value._char;
+	return *((char*) list_get_node(list, i)->value);
 }
 
 char* list_get_str(t_linkedlist* list, int i)
 {
-	return list_get_node(list, i)->value._string;
+	return (char*) list_get_node(list, i)->value;
 }
 
 long list_get_long(t_linkedlist* list, int i)
 {
-	return list_get_node(list, i)->value._long;
-}
-
-void* list_get_undef(t_linkedlist* list, int i)
-{
-	return list_get_node(list, i)->value._undef;
+	return *((long*) list_get_node(list, i)->value);
 }
 
 void list_remove(t_linkedlist** list, int i)
@@ -239,8 +215,8 @@ void list_remove(t_linkedlist** list, int i)
 	}
 }
 
-void list_update(t_linkedlist* list, void* value, t_linkedlist_type type, int i)
+void list_update(t_linkedlist* list, void* value, size_t size, int i)
 {
 	t_linkedlist* ptr = list_get_node(list, i);
-	list_assign_value(ptr, value, type);
+	list_assign_value(ptr, value, size);
 }
