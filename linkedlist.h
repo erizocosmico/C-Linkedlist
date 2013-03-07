@@ -27,48 +27,16 @@
  * be implemented in linkedlist.c.
  */
 
-#define T_SHORT LK_SHORT
-#define T_INT LK_INT
-#define T_FLOAT LK_FLOAT
-#define T_DOUBLE LK_DOUBLE
-#define T_CHAR LK_CHAR
-#define T_STRING LK_STRING
-#define T_LONG LK_LONG
-#define T_UNDEFINED LK_UNDEFINED
-
-typedef enum {
-	LK_SHORT,
-	LK_INT,
-	LK_FLOAT,
-	LK_DOUBLE,
-	LK_CHAR,
-	LK_STRING,
-	LK_LONG,
-	LK_UNDEFINED
-} t_linkedlist_type;
-
-typedef union {
-	short _short;
-	int _int;
-	float _float;
-	double _double;
-	char _char;
-	char* _string;
-	long _long;
-	void* _undef;
-} t_linkedlist_value;
-
 typedef struct node {
-	t_linkedlist_type type;
-	t_linkedlist_value value;
+	void* value;
 	struct node* link;
 } t_linkedlist;
 
-extern void list_assign_value(t_linkedlist* node, void* value, t_linkedlist_type type);
-extern void list_append(t_linkedlist** list, void* value, t_linkedlist_type type);
-extern void list_insert(t_linkedlist** list, void* value, t_linkedlist_type type, int i);
-extern t_linkedlist_type list_get_type(t_linkedlist* list, int i);
+extern void list_assign_value(t_linkedlist* node, void* value, size_t size);
+extern void list_append(t_linkedlist** list, void* value, size_t size);
+extern void list_insert(t_linkedlist** list, void* value, size_t size, int i);
 extern int list_count(t_linkedlist* list);
+extern void* list_get(t_linkedlist* list, int i);
 extern short list_get_short(t_linkedlist* list, int i);
 extern int list_get_int(t_linkedlist* list, int i);
 extern float list_get_float(t_linkedlist* list, int i);
@@ -78,4 +46,4 @@ extern char* list_get_str(t_linkedlist* list, int i);
 extern long list_get_long(t_linkedlist* list, int i);
 extern void* list_get_undef(t_linkedlist* list, int i);
 extern void list_remove(t_linkedlist** list, int i);
-extern void list_update(t_linkedlist* list, void* value, t_linkedlist_type type, int i);
+extern void list_update(t_linkedlist* list, void* value, size_t size, int i);
