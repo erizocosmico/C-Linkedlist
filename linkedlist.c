@@ -1,7 +1,7 @@
 /**
  * @file   linkedlist.c
  * @author José Miguel Molina (rd4091@gmail.com)
- * @version 1.0
+ * @version 1.2
  * @date   February, 2013
  * @brief  Provides an implementation for the functions defined in linkedlist.h.
  * @license MIT License
@@ -28,7 +28,6 @@
  */
 
 #include <stdlib.h>
-#include <string.h>
 #include "linkedlist.h"
 
 void list_assign_value(t_linkedlist* node, void* value, size_t size)
