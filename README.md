@@ -17,7 +17,7 @@ int main(void)
 	//List has to be passed by reference in append function
 	//In every function which sets the value of any node in the linkedlist, the value has to be a void* (so it can be a value of any type)
 	//Five is appended to the list at index 0
-	list_append(&mylist, (void*) &value, T_INT);
+	list_append(&mylist, (void*) &value, sizeof(int));
 	//Some code here
 	return 0;
 }
