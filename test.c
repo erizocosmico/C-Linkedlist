@@ -6,7 +6,7 @@ int main(void)
 	t_linkedlist* list = NULL;
 	int i, count;
 	for (i = 0; i < 15; i++)
-		list_append(&list, (void*) &i, T_INT);
+		list_append(&list, (void*) &i, sizeof(int));
 	
 	puts("Items from 0 to 14.");
 	for (i = 0; i < 15; i++)
@@ -21,7 +21,7 @@ int main(void)
 		printf("Item %d = %d\n", i, list_get_int(list, i));
 	
 	for (i = 0; i < 5; i++)
-		list_insert(&list, (void*) &i, T_INT, i);
+		list_insert(&list, (void*) &i, sizeof(int), i);
 	
 	puts("\nItems from 0 to 14.");
 	for (i = 0; i < 15; i++)
@@ -29,7 +29,7 @@ int main(void)
 	
 	puts("\nItems from 14 to 0.");
 	for (i = 14; i >= 0; i--)
-		list_update(list, (void*) &i, T_INT, 14 - i);
+		list_update(list, (void*) &i, sizeof(int), 14 - i);
 	
 	for (i = 0; i < 15; i++)
 		printf("Item %d = %d\n", i, list_get_int(list, i));
