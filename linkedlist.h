@@ -1,7 +1,7 @@
 /**
  * @file   linkedlist.h
  * @author José Miguel Molina (rd4091@gmail.com)
- * @version 1.0
+ * @version 1.2
  * @date   February, 2013
  * @brief  Declaration of linkedlist types and function prototypes.
  * @license MIT License
