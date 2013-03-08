@@ -25,4 +25,4 @@ int main(void)
 For more information just check out the header file. Function names are descriptive enough for you to guess what they do.
 
 ##Supported types
-You can store a value of any type you want but not all of them are treated the same way. If you want to store some C standard types you can use the functions provided by the library to retrieve the items from your list and set them using their respective type constant (`T_INT`, `T_FLOAT`, `T_STRING`, …) otherwise you will have to store them as undefined. Undefined is totally up to you to know what's there and how it has to be treated. You have to set items using `T_UNDEFINED` as the type and retrieve them using `list_get_undef(t_linkedlist* list, int i)`. Of course, you will have to cast the value returned (void*) before using it.
+You can store a value of any type you want but not all of them are treated the same way. If you want to store some C standard types you can use the functions provided by the library to retrieve the items from your list and set them using their respective functions otherwise you will have to cast the result by yourself.
