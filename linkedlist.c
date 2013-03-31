@@ -28,12 +28,13 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include "linkedlist.h"
 
 void list_assign_value(t_linkedlist* node, void* value, size_t size)
 {
 	node->value = malloc(size);
-	memmove(node->value, value, size);
+	memmove((void*) node->value, (const void*) value, (size_t) size);
 }
 
 void list_append(t_linkedlist** list, void* value, size_t size)
